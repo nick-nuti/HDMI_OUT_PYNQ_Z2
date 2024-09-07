@@ -5,9 +5,19 @@ I'm using vivado 2023.2
    ![image](https://github.com/user-attachments/assets/012bb671-8fa3-4915-bdef-41d72ec3a416)
 
 3. make design
-  a. IF USING 2023.2 then try the TCL script
+
+   a. IF USING 2023.2 then try the TCL script
     - add constraints file "pynqz2_pinout.xdc" to project in vivado
-    - copy "project_1.tcl" to project directory
+    - copy "design_1.tcl" to project directory
     - go to tcl console
     - cd "/path/to/project"
     - source project_1.tcl
+
+   b. If not then follow: https://digilent.com/reference/programmable-logic/zybo-z7/demos/hdmi?srsltid=AfmBOoq5cbN6XfLSWAgC-5jvk1q6CJUcMsgQIrxkhTzECcotQQ0c28Wr
+
+4. Generate bitstream
+5. File -> Export -> Export Hardware ; include bitstream
+6. Open Vitis, create a workspace
+7. Create platform component -> next -> browse for *.xsa you just generated
+8. Create application design from example -> hello world example
+9. Under hello world project import all of the files inside of the "vitis" directory in this git
