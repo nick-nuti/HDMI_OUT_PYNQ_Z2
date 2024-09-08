@@ -19,5 +19,5 @@ I'm using vivado 2023.2
 5. File -> Export -> Export Hardware ; include bitstream
 6. Open Vitis, create a workspace
 7. Create platform component -> next -> browse for *.xsa you just generated
-8. Create application design from example -> hello world example
+8. Create application design from example -> hello world example ; delete the helloworld.c default file
 9. Under hello world project import all of the files inside of the "vitis" directory in this git
