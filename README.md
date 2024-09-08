@@ -6,7 +6,7 @@ I'm using vivado 2023.2
 
 3. make design
 
-   a. IF USING 2023.2 then try the TCL script
+   a. try the TCL script
     - add constraints file "pynqz2_pinout.xdc" to project in vivado
     - copy "design_1.tcl" to project directory
     - go to tcl console
