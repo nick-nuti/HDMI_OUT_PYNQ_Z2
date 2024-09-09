@@ -21,3 +21,6 @@ I'm using vivado 2023.2
 7. Create platform component -> next -> browse for *.xsa you just generated
 8. Create application design from example -> hello world example ; delete the helloworld.c default file
 9. Under hello world project import all of the files inside of the "vitis" directory in this git
+
+
+NOTE: if you run into the unknown ps7_init.tcl problem then in vitis -> find launch.json under your_project -> Settings; under "Initialization file" press Browse ; navigate to project -> _ide -> psinit ; select ps7_init.tcl
