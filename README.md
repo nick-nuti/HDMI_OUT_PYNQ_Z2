@@ -1,3 +1,5 @@
+PROJECT IS CAPABLE OF OUTPUTTING MULTIPLE RESOLUTIONS AT 60HZ including 108p
+
 I'm using vivado 2023.2
 
 1. go here and download digilent IP repo: https://github.com/Digilent/vivado-library
