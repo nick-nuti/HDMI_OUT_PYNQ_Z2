@@ -26,3 +26,8 @@ I'm using vivado 2023.2
 NOTE: if you run into the unknown ps7_init.tcl problem then in vitis -> find launch.json under your_project -> Settings; under "Initialization file" press Browse ; navigate to project -> _ide -> psinit ; select ps7_init.tcl
 
 ![image](https://github.com/user-attachments/assets/fe04cd98-214e-40ba-8d45-845de4b0de35)
+
+expected output:
+
+https://github.com/user-attachments/assets/661c4d98-d64c-44d5-8bb0-c8481b524f33
+
