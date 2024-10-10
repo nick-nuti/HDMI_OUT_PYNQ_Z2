@@ -76,7 +76,7 @@ module axi_traffic_gen #(
   
     );
     
-    parameter ADDR_END   = ADDR_START + (FRAME_W*FRAME_H*PIX_SIZE_IN_BYTES)-PIX_SIZE_IN_BYTES; //32'h107E8FFC 
+    parameter ADDR_END   = ADDR_START + (FRAME_W*FRAME_H*PIX_SIZE_IN_BYTES)-PIX_SIZE_IN_BYTES; //32'h107E8FFC
     
     reg                           user_start;
     wire [3:0]                    user_burst_len_in;
@@ -191,12 +191,18 @@ module axi_traffic_gen #(
     end
     
     //FRAME GEN
+    
+    parameter NUM_FRAME_WAIT    = 59;
         
     reg [7:0] R, G, B;
     
     reg [31:0] pixel_cnt;
     
-    reg [4:0] color_combination;
+    reg [2:0] color_combination;
+    
+    reg [2:0] start_val;
+    
+    reg [5:0] frame_cnt;
     
     reg vsync_dff;
            
@@ -221,6 +227,8 @@ module axi_traffic_gen #(
             
             color_combination <= 'h0;
             
+            start_val <= 'h0;
+            
             pixel_cnt <= ADDR_START;
             
             vsync_dff <= 0;
@@ -241,14 +249,18 @@ module axi_traffic_gen #(
                 begin
                     pixel_cnt <= ADDR_START;
                     
-                    if(color_combination == 6)
+                    color_combination <= start_val;
+                    
+                    if(frame_cnt == NUM_FRAME_WAIT)
                     begin
-                        color_combination <= 0;
+                        frame_cnt <= 0;
+                        start_val <= start_val + 'h1;
                     end
                     
                     else
                     begin
-                        color_combination <= color_combination + 1;
+                        frame_cnt <= frame_cnt + 1;
+                        start_val <= start_val;
                     end
                 end
                 
@@ -256,7 +268,11 @@ module axi_traffic_gen #(
                 begin
                     //pixel_cnt <= pixel_cnt + ((user_burst_len_in+1)<<1); // 1 needs to change with DATA_W and ADDR_W
                     pixel_cnt <= pixel_cnt + ((user_burst_len_in+1)*(DATA_W/SIZE_OF_BYTE));
-                    color_combination <= color_combination;
+                    
+                    color_combination <= color_combination + 1;
+                    
+                    frame_cnt <= frame_cnt;
+                    start_val <= start_val;
                 end
             end
             
@@ -265,66 +281,63 @@ module axi_traffic_gen #(
                 pixel_cnt <= pixel_cnt;
                 
                 color_combination <= color_combination;
+                
+                frame_cnt <= frame_cnt;
+                start_val <= start_val;
             end
             
             case(color_combination)
                 0: 
                 begin
-                    R <= 8'hFF;
+                    R <= 8'h00;
                     G <= 8'h00;
                     B <= 8'h00;
                 end
                 1: 
                 begin
                     R <= 8'hFF;
-                    G <= 8'h01;
-                    B <= 8'b01;
+                    G <= 8'h00;
+                    B <= 8'b00;
                 end
                 2: 
                 begin
-                    R <= 8'hFF;
-                    G <= 8'h00;
+                    R <= 8'h00;
+                    G <= 8'hFF;
                     B <= 8'h00;
                 end
                 3: 
                 begin
                     R <= 8'hFF;
-                    G <= 8'h01;
-                    B <= 8'h01;
+                    G <= 8'hFF;
+                    B <= 8'h00;
                 end
                 4: 
                 begin
-                    R <= 8'hFF;
+                    R <= 8'h00;
                     G <= 8'h00;
-                    B <= 8'h00;
+                    B <= 8'hFF;
                 end
                 5: 
                 begin
                     R <= 8'hFF;
-                    G <= 8'h01;
-                    B <= 8'h01;
+                    G <= 8'h00;
+                    B <= 8'hFF;
                 end
                 6: 
                 begin
-                    R <= 8'hFF;
-                    G <= 8'h00;
-                    B <= 8'h00;
+                    R <= 8'h00;
+                    G <= 8'hFF;
+                    B <= 8'hFF;
                 end
                 7: 
                 begin
                     R <= 8'hFF;
-                    G <= 8'h01;
-                    B <= 8'h01;
-                end
-                8: 
-                begin
-                    R <= 8'hFF;
-                    G <= 8'h00;
-                    B <= 8'h00;
+                    G <= 8'hFF;
+                    B <= 8'hFF;
                 end
                 default:
                 begin
-                    R <= 8'hFF;
+                    R <= 8'h00;
                     G <= 8'h00;
                     B <= 8'h00;
                 end
