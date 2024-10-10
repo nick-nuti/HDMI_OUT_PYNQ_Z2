@@ -11,7 +11,7 @@ I'm using vivado 2023.2
     - copy "design_1.tcl" to project directory
     - go to tcl console
     - cd "/path/to/project"
-    - source display_block_design.tcl
+    - source design_1.tcl
 
    b. If not then follow: https://digilent.com/reference/programmable-logic/zybo-z7/demos/hdmi?srsltid=AfmBOoq5cbN6XfLSWAgC-5jvk1q6CJUcMsgQIrxkhTzECcotQQ0c28Wr
 
